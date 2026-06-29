@@ -449,14 +449,7 @@ public class Empresa {
     // BÚSQUEDAS INTERNAS (solo Empresa las usa — encapsulan la lógica de lookup)
     // ══════════════════════════════════════════════════════════════════════════
 
-    /**
-     * Busca un empleado por ID. Usado internamente por la fachada.
-     *
-     * @param id ID del empleado
-     * @return el {@link Empleado} encontrado
-     * @throws EmpleadoNoEncontradoException si no existe
-     */
-    public Empleado buscarEmpleado(String id) {
+    private Empleado buscarEmpleado(String id) {
         return empleados.stream()
                 .filter(e -> e.getId().equals(id))
                 .findFirst()
