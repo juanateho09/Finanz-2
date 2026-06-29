@@ -1,0 +1,33 @@
+# ── Compilados y build de Maven ──────────────────────────────────────────────
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# ── IntelliJ IDEA ────────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ── Sistema operativo ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Variables de entorno y secretos (NUNCA subir) ────────────────────────────
+.env
+*.key
+*.pem
+*.p12
+*.jks
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Datos de la aplicación (archivo generado en runtime) ─────────────────────
+# Descomenta la siguiente línea si NO quieres versionar los datos:
+# data/finanz_data.json
