@@ -43,13 +43,6 @@
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- JavaFX: gráficas para reportes -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-charts</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-
         <!-- Gson: persistencia en JSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -89,7 +82,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>co.finanz/co.finanz.Main</mainClass>
+                    <mainClass>co.finanz.Main</mainClass>
                 </configuration>
             </plugin>
 
