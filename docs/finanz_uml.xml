@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-06-28" version="21.0.0">
+  <diagram id="finanz-class-diagram" name="Finanz — Diagrama de Clases">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ══════════════════════════════════════════
+             COLORES:
+             Abstracta     → amarillo  #fff2cc / #d6b656
+             Concreta      → azul      #dae8fc / #6c8ebf
+             Facade        → rosa      #f8cecc / #b85450
+             Strategy/Obs  → verde     #d5e8d4 / #82b366
+             Servicio      → morado    #e1d5e7 / #9673a6
+             Excepción     → gris      #f5f5f5 / #666666
+        ══════════════════════════════════════════ -->
+
+        <!-- ───────────────────────────────────────
+             TRANSACCION (abstract)
+        ─────────────────────────────────────────── -->
+        <mxCell id="transaccion" value="«abstract»&#xa;Transaccion" style="swimlane;fontStyle=3;align=center;startSize=40;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="250" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="transaccion_f" value="- id: String&#xa;- monto: double&#xa;- fecha: LocalDate&#xa;- descripcion: String&#xa;- categoria: Categoria" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="transaccion">
+          <mxGeometry y="40" width="250" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="transaccion_sep" value="" style="line;strokeColor=#d6b656;" vertex="1" parent="transaccion">
+          <mxGeometry y="130" width="250" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="transaccion_m" value="+ getId(): String&#xa;+ getMonto(): double&#xa;«abstract» + getTipo(): String&#xa;«abstract» + getResumen(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="transaccion">
+          <mxGeometry y="140" width="250" height="70" as="geometry"/>
+        </mxCell>
+
+        <!-- INGRESO -->
+        <mxCell id="ingreso" value="Ingreso" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="300" width="210" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingreso_f" value="- fuente: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="ingreso">
+          <mxGeometry y="26" width="210" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingreso_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="ingreso">
+          <mxGeometry y="56" width="210" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="ingreso_m" value="+ getTipo(): &quot;INGRESO&quot;&#xa;+ getResumen(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="ingreso">
+          <mxGeometry y="66" width="210" height="54" as="geometry"/>
+        </mxCell>
+
+        <!-- GASTO -->
+        <mxCell id="gasto" value="Gasto" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="270" y="300" width="210" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="gasto_f" value="- generadoPorNomina: boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="gasto">
+          <mxGeometry y="26" width="210" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="gasto_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="gasto">
+          <mxGeometry y="56" width="210" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="gasto_m" value="+ getTipo(): &quot;GASTO&quot;&#xa;+ getResumen(): String&#xa;+ isGeneradoPorNomina(): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="gasto">
+          <mxGeometry y="66" width="210" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             CATEGORIA (abstract)
+        ─────────────────────────────────────────── -->
+        <mxCell id="categoria" value="«abstract»&#xa;Categoria" style="swimlane;fontStyle=3;align=center;startSize=40;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="940" y="20" width="240" height="190" as="geometry"/>
+        </mxCell>
+        <mxCell id="categoria_f" value="- id: String&#xa;- nombre: String&#xa;- descripcion: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="categoria">
+          <mxGeometry y="40" width="240" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="categoria_sep" value="" style="line;strokeColor=#d6b656;" vertex="1" parent="categoria">
+          <mxGeometry y="100" width="240" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="categoria_m" value="+ getNombre(): String&#xa;«abstract» + getTipo(): String&#xa;«abstract» + esCompatible(t): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="categoria">
+          <mxGeometry y="110" width="240" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- CATEGORIAINGRESO -->
+        <mxCell id="catIngreso" value="CategoriaIngreso" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="850" y="280" width="200" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="catIngreso_m" value="+ getTipo(): &quot;INGRESO&quot;&#xa;+ esCompatible(t): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="catIngreso">
+          <mxGeometry y="26" width="200" height="74" as="geometry"/>
+        </mxCell>
+
+        <!-- CATEGORIAGASTO -->
+        <mxCell id="catGasto" value="CategoriaGasto" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="280" width="200" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="catGasto_m" value="+ getTipo(): &quot;GASTO&quot;&#xa;+ esCompatible(t): boolean" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="catGasto">
+          <mxGeometry y="26" width="200" height="74" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             EMPRESA (Facade) — centro del diagrama
+        ─────────────────────────────────────────── -->
+        <mxCell id="empresa" value="Empresa  «Facade»" style="swimlane;fontStyle=1;align=center;startSize=40;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="530" y="20" width="340" height="530" as="geometry"/>
+        </mxCell>
+        <mxCell id="empresa_f" value="- nombre: String&#xa;- empleados: List&lt;Empleado&gt;&#xa;- transacciones: List&lt;Transaccion&gt;&#xa;- categorias: List&lt;Categoria&gt;&#xa;- presupuestos: List&lt;Presupuesto&gt;&#xa;- tiposContrato: List&lt;TipoContrato&gt;&#xa;- gestor: GestorPersistencia" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="empresa">
+          <mxGeometry y="40" width="340" height="130" as="geometry"/>
+        </mxCell>
+        <mxCell id="empresa_sep" value="" style="line;strokeColor=#b85450;" vertex="1" parent="empresa">
+          <mxGeometry y="170" width="340" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="empresa_m" value="// ── Transacciones ──&#xa;+ registrarIngreso(...): Ingreso&#xa;+ registrarGasto(...): Gasto&#xa;+ editarTransaccion(id,...): void&#xa;+ eliminarTransaccion(id): void&#xa;+ getIngresos(): List&lt;Ingreso&gt;&#xa;+ getGastos(): List&lt;Gasto&gt;&#xa;// ── Categorías ──&#xa;+ crearCategoriaIngreso(...): CategoriaIngreso&#xa;+ crearCategoriaGasto(...): CategoriaGasto&#xa;+ eliminarCategoria(id): void&#xa;// ── Empleados / Nómina ──&#xa;+ registrarEmpleado(...): Empleado&#xa;+ asignarContrato(...): void&#xa;+ generarNomina(...): DesprendiblePago&#xa;// ── Tipos de Contrato ──&#xa;+ crearTipoContrato(...): TipoContrato&#xa;+ getTiposContrato(): List&lt;TipoContrato&gt;&#xa;// ── Presupuestos ──&#xa;+ crearPresupuesto(...): Presupuesto&#xa;+ getPresupuestos(): List&lt;Presupuesto&gt;&#xa;// ── Reportes ──&#xa;+ generarReporteBalance(mes): String&#xa;+ calcularBalance(): double&#xa;+ calcularTotalIngresos(): double&#xa;// ── Persistencia ──&#xa;+ guardar(): void&#xa;+ cargar(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;fontSize=11;" vertex="1" parent="empresa">
+          <mxGeometry y="180" width="340" height="350" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             EMPLEADO
+        ─────────────────────────────────────────── -->
+        <mxCell id="empleado" value="Empleado" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="510" width="250" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="empleado_f" value="- id: String&#xa;- nombre: String&#xa;- apellido: String&#xa;- cedula: String&#xa;- cargo: String&#xa;- contrato: Contrato&#xa;- historialPagos: List&lt;DesprendiblePago&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="empleado">
+          <mxGeometry y="26" width="250" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="empleado_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="empleado">
+          <mxGeometry y="146" width="250" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="empleado_m" value="+ getNombreCompleto(): String&#xa;+ calcularSalarioNeto(): double&#xa;+ agregarPago(d: DesprendiblePago): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="empleado">
+          <mxGeometry y="156" width="250" height="44" as="geometry"/>
+        </mxCell>
+
+        <!-- CONTRATO -->
+        <mxCell id="contrato" value="Contrato" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="30" y="790" width="250" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="contrato_f" value="- id: String&#xa;- fechaInicio: LocalDate&#xa;- salarioBase: double&#xa;- tipoContrato: TipoContrato" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="contrato">
+          <mxGeometry y="26" width="250" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="contrato_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="contrato">
+          <mxGeometry y="96" width="250" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="contrato_m" value="+ calcularSalarioNeto(): double&#xa;+ calcularDeducciones(): double&#xa;+ getSalarioBase(): double&#xa;+ getTipoContrato(): TipoContrato" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="contrato">
+          <mxGeometry y="106" width="250" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- DESPRENDIBLEPAGO -->
+        <mxCell id="desprendible" value="DesprendiblePago" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="310" y="510" width="250" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="desprendible_f" value="- id: String&#xa;- empleadoId: String&#xa;- periodo: YearMonth&#xa;- salarioBruto: double&#xa;- deducciones: double&#xa;- salarioNeto: double&#xa;- fechaEmision: LocalDate" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="desprendible">
+          <mxGeometry y="26" width="250" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="desprendible_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="desprendible">
+          <mxGeometry y="146" width="250" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="desprendible_m" value="+ getSalarioNeto(): double&#xa;+ getDeducciones(): double&#xa;+ getPeriodo(): YearMonth&#xa;+ convertirAGasto(cat): Gasto" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="desprendible">
+          <mxGeometry y="156" width="250" height="54" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             STRATEGY: EstrategiaSalario + TipoContrato
+        ─────────────────────────────────────────── -->
+        <mxCell id="estrategia" value="«interface»&#xa;EstrategiaSalario" style="swimlane;fontStyle=3;align=center;startSize=40;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="310" y="800" width="250" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="estrategia_m" value="+ calcularSalarioNeto(base: double): double&#xa;+ calcularDeducciones(base: double): double&#xa;+ getNombre(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="estrategia">
+          <mxGeometry y="40" width="250" height="80" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="tipoContrato" value="TipoContrato" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="30" y="1040" width="270" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="tipoContrato_f" value="- id: String&#xa;- nombre: String&#xa;- descripcion: String&#xa;- porcentajeSalud: double&#xa;- porcentajePension: double&#xa;- porcentajeRetencion: double&#xa;- porcentajeAdicional: double" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="tipoContrato">
+          <mxGeometry y="26" width="270" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="tipoContrato_sep" value="" style="line;strokeColor=#82b366;" vertex="1" parent="tipoContrato">
+          <mxGeometry y="146" width="270" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="tipoContrato_m" value="+ calcularSalarioNeto(base): double&#xa;+ calcularDeducciones(base): double&#xa;+ getNombre(): String&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="tipoContrato">
+          <mxGeometry y="156" width="270" height="74" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             PRESUPUESTO + OBSERVER
+        ─────────────────────────────────────────── -->
+        <mxCell id="presupuesto" value="Presupuesto" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="900" y="460" width="260" height="240" as="geometry"/>
+        </mxCell>
+        <mxCell id="presupuesto_f" value="- id: String&#xa;- categoria: CategoriaGasto&#xa;- limiteMonto: double&#xa;- mes: YearMonth&#xa;- gastoActual: double&#xa;- observadores: List&lt;ObservadorPresupuesto&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="presupuesto">
+          <mxGeometry y="26" width="260" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="presupuesto_sep" value="" style="line;strokeColor=#6c8ebf;" vertex="1" parent="presupuesto">
+          <mxGeometry y="136" width="260" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="presupuesto_m" value="+ registrarGasto(monto: double): void&#xa;+ getPorcentajeConsumido(): double&#xa;+ isExcedido(): boolean&#xa;+ getMontoRestante(): double&#xa;+ agregarObservador(obs): void&#xa;- notificarObservadores(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="presupuesto">
+          <mxGeometry y="146" width="260" height="94" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="observador" value="«interface»&#xa;ObservadorPresupuesto" style="swimlane;fontStyle=3;align=center;startSize=40;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1190" y="460" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="observador_m" value="+ onPresupuestoExcedido(p: Presupuesto): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="observador">
+          <mxGeometry y="40" width="260" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             SERVICIOS: GestorPersistencia + AnalizadorFinanciero
+        ─────────────────────────────────────────── -->
+        <mxCell id="gestor" value="GestorPersistencia" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="20" width="260" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="gestor_f" value="- rutaArchivo: String&#xa;- gson: Gson" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="gestor">
+          <mxGeometry y="26" width="260" height="44" as="geometry"/>
+        </mxCell>
+        <mxCell id="gestor_sep" value="" style="line;strokeColor=#9673a6;" vertex="1" parent="gestor">
+          <mxGeometry y="70" width="260" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="gestor_m" value="+ guardar(empresa: Empresa): void&#xa;+ cargar(): Empresa&#xa;- crearArchivoVacio(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;" vertex="1" parent="gestor">
+          <mxGeometry y="80" width="260" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="analizador" value="«abstract»&#xa;AnalizadorFinanciero" style="swimlane;fontStyle=3;align=center;startSize=40;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="240" width="280" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="analizador_sep1" value="" style="line;strokeColor=#d6b656;" vertex="1" parent="analizador">
+          <mxGeometry y="40" width="280" height="10" as="geometry"/>
+        </mxCell>
+        <mxCell id="analizador_m" value="«final» + generarReporte(txs, mes): String&#xa;─── Template Method ───&#xa;  1. generarEncabezado()&#xa;  2. calcularDatos(txs)&#xa;  3. formatearResultados(datos)&#xa;  4. generarPie()&#xa;─────────────────────&#xa;«abstract» # generarEncabezado(): String&#xa;«abstract» # calcularDatos(...): Map&#xa;«abstract» # formatearResultados(...): String&#xa;# generarPie(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;fontSize=11;" vertex="1" parent="analizador">
+          <mxGeometry y="50" width="280" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- Subclases de AnalizadorFinanciero -->
+        <mxCell id="rBalance" value="ReporteBalance" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="560" width="200" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="rBalance_m" value="# generarEncabezado(): String&#xa;# calcularDatos(...): Map&#xa;# formatearResultados(...): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;fontSize=10;" vertex="1" parent="rBalance">
+          <mxGeometry y="26" width="200" height="64" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rCategoria" value="ReportePorCategoria" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1530" y="560" width="210" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="rCategoria_m" value="# generarEncabezado(): String&#xa;# calcularDatos(...): Map&#xa;# formatearResultados(...): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;fontSize=10;" vertex="1" parent="rCategoria">
+          <mxGeometry y="26" width="210" height="64" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="rNomina" value="ReporteNomina" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="560" width="200" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="rNomina_m" value="# generarEncabezado(): String&#xa;# calcularDatos(...): Map&#xa;# formatearResultados(...): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=6;overflow=hidden;fontSize=10;" vertex="1" parent="rNomina">
+          <mxGeometry y="26" width="200" height="64" as="geometry"/>
+        </mxCell>
+
+        <!-- ───────────────────────────────────────
+             EXCEPCIONES
+        ─────────────────────────────────────────── -->
+        <mxCell id="excBase" value="RuntimeException" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="660" y="740" width="210" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="exc1" value="PresupuestoExcedidoException" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="870" width="260" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="exc2" value="EmpleadoNoEncontradoException" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="810" y="870" width="280" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="exc3" value="CategoriaNoEncontradaException" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="940" width="280" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="exc4" value="PersistenciaException" style="swimlane;fontStyle=1;align=center;startSize=26;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="830" y="940" width="230" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════
+             FLECHAS DE RELACIÓN
+        ═══════════════════════════════════════ -->
+
+        <!-- Herencia (triángulo hueco) -->
+        <mxCell id="e_ing_tx" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="ingreso" target="transaccion" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_gas_tx" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="gasto" target="transaccion" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_ci_cat" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="catIngreso" target="categoria" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_cg_cat" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="catGasto" target="categoria" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_rb_an" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;" edge="1" source="rBalance" target="analizador" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_rc_an" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;" edge="1" source="rCategoria" target="analizador" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_rn_an" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#9673a6;" edge="1" source="rNomina" target="analizador" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_exc1_base" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;" edge="1" source="exc1" target="excBase" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_exc2_base" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;" edge="1" source="exc2" target="excBase" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_exc3_base" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;" edge="1" source="exc3" target="excBase" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_exc4_base" style="endArrow=block;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;" edge="1" source="exc4" target="excBase" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Implementación (triángulo hueco + línea punteada) -->
+        <mxCell id="e_tc_es" style="endArrow=block;endFill=0;dashed=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;" edge="1" source="tipoContrato" target="estrategia" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Composición (diamante relleno en el dueño) -->
+        <mxCell id="e_emp_con" style="endArrow=open;endFill=0;startArrow=diamond;startFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="empleado" target="contrato" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_emp_des" style="endArrow=open;endFill=0;startArrow=diamond;startFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="empleado" target="desprendible" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_emp_ges" style="endArrow=open;endFill=0;startArrow=diamond;startFill=1;edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;" edge="1" source="empresa" target="gestor" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Asociación (flecha abierta) -->
+        <mxCell id="e_tx_cat" style="endArrow=open;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;" edge="1" source="transaccion" target="categoria" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_con_tc" style="endArrow=open;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="contrato" target="tipoContrato" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_pre_cg" style="endArrow=open;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;" edge="1" source="presupuesto" target="catGasto" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_pre_obs" style="endArrow=open;endFill=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;" edge="1" source="presupuesto" target="observador" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══════════════════════════════════════
+             LEYENDA
+        ═══════════════════════════════════════ -->
+        <mxCell id="legend_bg" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#cccccc;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="760" width="220" height="230" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="Leyenda" style="text;fontStyle=1;fontSize=13;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="765" width="220" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg1" value="Clase abstracta" style="swimlane;startSize=24;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="798" width="200" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2" value="Clase concreta (modelo)" style="swimlane;startSize=24;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="834" width="200" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg3" value="Facade (Empresa)" style="swimlane;startSize=24;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="870" width="200" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg4" value="Strategy / Observer" style="swimlane;startSize=24;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="906" width="200" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg5" value="Servicio / Reporte" style="swimlane;startSize=24;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="942" width="200" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg6" value="Excepción" style="swimlane;startSize=24;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1500" y="978" width="200" height="28" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

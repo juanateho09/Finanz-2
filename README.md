@@ -32,14 +32,94 @@ Finanz es una aplicación de escritorio que permite a las pequeñas y medianas e
 - **Reportes** — Balance general, reportes por categoría y gráficas de flujo de caja
 - **Persistencia** — Guardado y carga automática del estado en JSON
 
-## Arquitectura
+## Arquitectura y Patrones de Diseño
 
-El proyecto aplica los siguientes patrones de diseño de la GoF:
+| Patrón | Clase | Propósito |
+|---|---|---|
+| **Facade** | `Empresa` | Único punto de entrada para los controllers; oculta toda la complejidad interna |
+| **Strategy** | `TipoContrato` / `EstrategiaSalario` | Cada tipo de contrato calcula salario y deducciones de forma distinta. Los tipos son **configurables en tiempo de ejecución** (no hardcodeados) |
+| **Observer** | `Presupuesto` / `ObservadorPresupuesto` | Notifica automáticamente a la UI cuando un gasto supera el límite presupuestado |
+| **Template Method** | `AnalizadorFinanciero` | Define la estructura fija de generación de reportes; cada subclase implementa el cálculo específico |
 
-- **Facade** — `Empresa` es el único punto de entrada para los controllers
-- **Strategy** — `Contrato` delega el cálculo salarial según el tipo de contrato
-- **Observer** — `Presupuesto` notifica automáticamente cuando se excede un límite
-- **Template Method** — `AnalizadorFinanciero` define la estructura fija de cada reporte
+## Jerarquía de Clases
+
+```
+Empresa  «Facade»
+├── List<Empleado>
+│   └── Contrato
+│       └── TipoContrato  «Strategy»   ← configurable en runtime
+├── List<Transaccion>  «abstract»
+│   ├── Ingreso
+│   └── Gasto
+├── List<Categoria>  «abstract»
+│   ├── CategoriaIngreso
+│   └── CategoriaGasto
+├── List<Presupuesto>  «Observer»
+├── List<TipoContrato>  ← catálogo de tipos (3 por defecto + los que cree el usuario)
+├── GestorPersistencia
+└── AnalizadorFinanciero  «Template Method»  «abstract»
+    ├── ReporteBalance
+    ├── ReportePorCategoria
+    └── ReporteNomina
+```
+
+## Estructura del Proyecto
+
+```
+src/
+├── main/java/co/finanz/
+│   ├── Main.java
+│   ├── model/            ← Entidades de dominio
+│   │   ├── Empresa.java             (Facade)
+│   │   ├── Transaccion.java         (abstract)
+│   │   ├── Ingreso.java
+│   │   ├── Gasto.java
+│   │   ├── Categoria.java           (abstract)
+│   │   ├── CategoriaIngreso.java
+│   │   ├── CategoriaGasto.java
+│   │   ├── Empleado.java
+│   │   ├── Contrato.java
+│   │   ├── DesprendiblePago.java
+│   │   └── Presupuesto.java
+│   ├── service/          ← Lógica de negocio
+│   │   ├── AnalizadorFinanciero.java  (abstract — Template Method)
+│   │   ├── ReporteBalance.java
+│   │   ├── ReportePorCategoria.java
+│   │   ├── ReporteNomina.java
+│   │   └── GestorPersistencia.java
+│   ├── strategy/         ← Patrón Strategy (cálculo salarial)
+│   │   ├── EstrategiaSalario.java   (interface)
+│   │   └── TipoContrato.java        (implementación configurable)
+│   ├── observer/         ← Patrón Observer (alertas de presupuesto)
+│   │   └── ObservadorPresupuesto.java  (interface)
+│   ├── controller/       ← Controllers JavaFX (solo UI, sin lógica de negocio)
+│   │   ├── DashboardController.java
+│   │   ├── TransaccionController.java
+│   │   ├── EmpleadoController.java
+│   │   ├── PresupuestoController.java
+│   │   └── ReporteController.java
+│   ├── util/
+│   │   └── AlertaUtil.java
+│   └── exception/        ← Excepciones personalizadas
+│       ├── PresupuestoExcedidoException.java
+│       ├── EmpleadoNoEncontradoException.java
+│       ├── CategoriaNoEncontradaException.java
+│       └── PersistenciaException.java
+└── main/resources/co/finanz/
+    ├── fxml/             ← Vistas declarativas (Scene Builder)
+    └── css/              ← Estilos visuales
+```
+
+## Tipos de Contrato (Strategy extensible)
+
+Los tipos de contrato **no están hardcodeados** como clases fijas. `TipoContrato` es una entidad configurable que implementa `EstrategiaSalario`. La aplicación incluye 3 tipos por defecto, pero el usuario puede crear los suyos:
+
+| Tipo | % Salud | % Pensión | % Retención |
+|---|---|---|---|
+| Término Fijo | 4% | 4% | 0% |
+| Término Indefinido | 4% | 4% | 0% |
+| Prestación de Servicios | 0% | 0% | variable |
+| *(definido por usuario)* | custom | custom | custom |
 
 ## Cómo ejecutar
 
@@ -52,19 +132,4 @@ mvn javafx:run
 
 # Correr los tests
 mvn test
-```
-
-## Estructura del proyecto
-
-```
-src/
-├── main/java/co/finanz/
-│   ├── model/        ← Clases de dominio (POO)
-│   ├── service/      ← Lógica de análisis y persistencia
-│   ├── controller/   ← Controllers de JavaFX (solo UI)
-│   ├── util/         ← Utilidades comunes
-│   └── exception/    ← Excepciones personalizadas
-└── main/resources/co/finanz/
-    ├── fxml/         ← Vistas declarativas
-    └── css/          ← Estilos visuales
 ```
